@@ -1,0 +1,107 @@
+/* styles.css */
+:root {
+    --primary-crimson: #DC143C;
+    --secondary-crimson: #B01030;
+}
+
+.chat-container { 
+    height: calc(100vh - 300px); /* Adjusted height to make space for the footer */
+    overflow-y: auto;
+}
+
+.message { 
+    margin: 10px 0; 
+    clear: both; 
+}
+
+.user-message { 
+    float: right; 
+    background-color: var(--primary-crimson); 
+    color: white; 
+    padding: 10px; 
+    border-radius: 15px 15px 0 15px; 
+    max-width: 70%; 
+    position: relative;
+}
+
+.bot-message { 
+    float: left; 
+    background-color: #f0f0f0; 
+    color: black; 
+    padding: 10px; 
+    border-radius: 15px 15px 15px 0; 
+    max-width: 70%;
+    position: relative;
+}
+
+/* Button styles for copy and thumbs up */
+.copy-btn, .edit-btn, .thumbs-up-btn {
+    margin-left: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--secondary-crimson);
+    font-size: 0.8rem;
+}
+
+/* Footer styles */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8rem;
+    border-top: 1px solid #eee;
+}
+
+/* Updated intro screen */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-crimson);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: popIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.send-button {
+    color: #fff; /* White text color */
+    background-color: #007bff; /* Blue background color */
+    border: none; /* Remove border */
+    padding: 10px 20px; /* Add some padding */
+    font-size: 16px; /* Increase font size */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+  
+  .send-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+  }
+
+  .bg-primary-crimson {
+    background-color: #dc143c; /* Crimson color */
+  }
+  
+  .text-white {
+    color: #ffffff; /* White text color */
+  }
+  
+  .hover\:bg-secondary-crimson:hover {
+    background-color: #a10d2e; /* Darker crimson color for hover */
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Large shadow */
+  }

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Capitol University AI Chat</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- TailwindCSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-50">
+  <!-- Updated Intro Screen -->
+  <div id="intro-screen" class="flex flex-col items-center justify-center h-screen bg-primary-crimson">
+    <img href="index.html" src="cu-logo.png" alt="CU Logo" class="w-32 h-32 mb-4">
+    <h1 class="text-3xl text-white font-bold">Jcrist AI</h1>
+    <p class="text-white mt-2">Your Capitol University AI Assistant</p>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container mx-auto pt-4 pb-24"> <!-- Adjusted padding-bottom to make space for the footer -->
+    <div class="flex justify-between items-center mb-8">
+      <div class="flex items-center">
+        <img src="cu-logo.png" alt="CU Logo" class="w-12 h-12 mr-4">
+        <h1 class="text-xl md:text-3xl font-bold text-crimson">Capitol University AI Assistant</h1>
+      </div>
+      
+      <!-- Three Dot Menu -->
+      <div class="dropdown">
+        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" data-toggle="modal" data-target="#registerModal">Register</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#aboutModal">About</button>
+          <button class="dropdown-item" data-toggle="modal" data-target="#helpModal">Help</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="bg-white rounded-xl shadow-lg p-4 md:p-6">
+      <div id="chat-container" class="chat-container mb-4">
+        <div id="messages"></div>
+      </div>
+      
+      <div class="flex gap-2">
+        <input type="text" id="user-input" class="flex-grow px-4 py-2 border rounded-full" 
+               placeholder="Type your message...">
+        <button id="send-button" class="px-6 py-2 bg-primary-crimson text-white rounded-full hover:bg-secondary-crimson shadow-lg">
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    Jcrist AI may occasionally provide inaccurate information. Always verify important facts.<br>
+    Version 1.0 (Beta)
+  </div>
+
+  <!-- Modals -->
+  <!-- Register Modal -->
+  <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="registerModalLabel">Register</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Registration form content -->
+          <p>This is a beta release. We are actively working on fixing issues and implementing improvements before launching the full registration feature for this product.</p><br>
+          <p><u><a href="https://facebook.com/jcristorhen">Jcrist Vincent Orhen</a></u><br>Developer/AI Engineer</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- About Modal -->
+  <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aboutModalLabel">About</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- About content -->
+          <p>Jcrist AI is the Capitol University AI Assistant, powered by Alibaba Cloud and pre-trained by ORHEN Technologies. Developed from the ground up by Jcrist Vincent Orhen, this AI Assistant serves as a personal assistant to each individual at Capitol University and is continuously being enhanced as a specialized tool exclusively for the Capitol University.</p><br>
+          <p><strong>Version 1.0 (Beta)</strong></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="helpModalLabel">Help</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Help content -->
+          <p><strong>Contact Information</strong></p>
+          <p>Email: workingscholars4@gmail.com<br>Phone Number: 09627972598<br>Facebook: <a href="https://www.facebook.com/jcristorhen">Jcrist Orhen</a></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+  <script src="server.js"></script>
+</body>
+</html>
