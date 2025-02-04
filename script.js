@@ -112,17 +112,43 @@ $(document).ready(function() {
         const profileClass = role === "user" ? "user-profile" : "bot-profile";
         const messageClass = role === "user" ? "user-message" : "bot-message";
         const profileText = role === "user" ? "YOU" : "CU";
-
+    
+        // Format the message with proper HTML
+        let formattedMessage = message;
+        
+        if (role === "bot") {
+            // Convert any remaining asterisks to proper HTML
+            formattedMessage = formattedMessage
+                // Convert bullet points with asterisks to proper HTML lists
+                .replace(/^\s*\*\s+(.+)$/gm, '<li>$1</li>')
+                // Convert any remaining asterisks around text to strong tags
+                .replace(/\*(.*?)\*/g, '<strong>$1</strong>')
+                // Wrap lists in <ul> tags
+                .replace(/<li>(?:.|\n)*?<\/li>/g, match => `<ul>${match}</ul>`);
+        }
+    
+        // Split into paragraphs and format
+        const paragraphs = formattedMessage.split('\n').filter(p => p.trim());
+        const formattedParagraphs = paragraphs.map(p => {
+            // Don't wrap <ul> elements in <p> tags
+            if (p.startsWith('<ul>')) {
+                return p;
+            }
+            return `<p>${p}</p>`;
+        }).join('');
+    
         const messageElem = $(`
             <div class="message ${messageClass}" data-timestamp="${timestamp}">
                 <div class="${profileClass}">${profileText}</div>
                 <div class="message-content">
-                    <div class="message-text">${message}</div>
+                    <div class="message-text formatted-text">
+                        ${formattedParagraphs}
+                    </div>
                     <div class="message-timestamp">${timestamp}</div>
                 </div>
             </div>
         `);
-
+    
         $("#messages").append(messageElem);
         messageElem.hide().fadeIn(300);
         scrollToBottom();
@@ -140,8 +166,7 @@ $(document).ready(function() {
     function initializeChat() {
         if ($("#messages").children().length === 0) {
             const welcomeMessage = 
-                `Hi!\n\n` +
-                `I'm CapitolGPT, How may I help you today?`;
+                `Hi! I'm CapitolGPT, How may I help you today?`;
             
             setTimeout(() => {
                 addMessage("bot", welcomeMessage);
@@ -161,7 +186,7 @@ $(document).ready(function() {
             },
             {
                 role: "model",
-                parts: [{ text: "I am CapitolGPT, created by ORHEN Technology." }]
+                parts: [{ text: "I am a large language model, trained by Orhen." }]
             },
             {
                 role: "user",
@@ -169,7 +194,15 @@ $(document).ready(function() {
             },
             {
                 role: "model",
-                parts: [{ text: "I was created by Jcrist Vincent Orhen powering ORHEN ENGINE." }]
+                parts: [{ text: "I was created by Orhen." }]
+            },
+            {
+                role: "user",
+                parts: [{ text: "Format your responses with HTML tags. Use <strong> for emphasis. Do not use asterisks (*) for formatting. Use bullet points with proper HTML." }]
+            },
+            {
+                role: "model",
+                parts: [{ text: "I understand. I will use proper HTML formatting without asterisks." }]
             }
         ];
 
@@ -313,11 +346,21 @@ $(document).ready(function() {
 
     // Initialize
     function adjustLayout() {
-        if ($(window).width() < 768) {
-            $('.chat-container').height($(window).height() * 0.6);
-        } else {
-            $('.chat-container').height($(window).height() - 300);
-        }
+        const windowHeight = window.innerHeight;
+        const headerHeight = $('.header-container').outerHeight(true);
+        const footerHeight = $('.footer').outerHeight(true);
+        const inputHeight = $('.input-container').outerHeight(true);
+        
+        // Calculate available height for chat container
+        const availableHeight = windowHeight - headerHeight - footerHeight - inputHeight - 40; // 40px for margins
+        
+        $('.chat-wrapper').css('height', `${availableHeight}px`);
+        
+        // Ensure chat container fills available space
+        $('.chat-container').css('height', '100%');
+        
+        // Scroll to bottom after layout adjustment
+        scrollToBottom();
     }
 
     $(window).resize(adjustLayout);
