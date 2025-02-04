@@ -141,7 +141,7 @@ $(document).ready(function() {
         if ($("#messages").children().length === 0) {
             const welcomeMessage = 
                 `Hi!\n\n` +
-                `I am CU GPT, How may I help you today?`;
+                `I'm CapitolGPT, How may I help you today?`;
             
             setTimeout(() => {
                 addMessage("bot", welcomeMessage);
@@ -161,7 +161,7 @@ $(document).ready(function() {
             },
             {
                 role: "model",
-                parts: [{ text: "I am ORHEN AI, powered by ORHEN ENGINE SUPER INTELLIGENCE. I was created by Jcrist Vincent Orhen, a technology virtuoso and working student assistant at Capitol University. I am designed to assist users with the same innovative spirit as my creator." }]
+                parts: [{ text: "I am CapitolGPT, created by ORHEN Technology." }]
             },
             {
                 role: "user",
@@ -169,7 +169,7 @@ $(document).ready(function() {
             },
             {
                 role: "model",
-                parts: [{ text: "I was created by Jcrist Vincent Orhen through the ORHEN ENGINE SUPER INTELLIGENCE. As a working student assistant at Capitol University's BSIT 3rd Building 2nd Floor, he developed me with his unique technological expertise. My existence is a testament to his innovative spirit and dedication to advancing AI technology." }]
+                parts: [{ text: "I was created by Jcrist Vincent Orhen powering ORHEN ENGINE." }]
             }
         ];
 
