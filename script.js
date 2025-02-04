@@ -1,872 +1,903 @@
-:root {
-  --primary-crimson: #DC143C;
-  --secondary-crimson: #B01030;
-  --gradient-start: #DC143C;
-  --gradient-end: #8B0000;
-  --shadow-color: rgba(220, 20, 60, 0.2);
-  --text-light: #ffffff;
-  --text-dark: #333333;
-  --bg-light: #f8f9fa;
-}
-
-/* Base Styles */
-body {
-  font-family: 'Poppins', sans-serif;
-  overflow: hidden; /* Changed from overflow-x: hidden; */
-  background: var(--bg-light);
-}
-
-/* Intro Screen */
-#intro-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at center, var(--gradient-start), var(--gradient-end));
-  z-index: 1000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.intro-logo {
-  animation: logoSpin 2s ease-out forwards;
-  filter: drop-shadow(0 0 15px rgba(255,255,255,0.3));
-}
-
-.intro-title {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUpFade 0.8s ease forwards 1s;
-}
-
-.intro-subtitle {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: slideUpFade 0.8s ease forwards 1.5s;
-}
-
-/* Header Container */
-.header-container {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  border-radius: 15px;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 4px 15px var(--shadow-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* DateTime and User Info */
-.header-info {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  color: var(--text-light);
-}
-
-.current-time {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  color: white;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  white-space: nowrap;
-  font-family: monospace;
-}
-
-.current-time i {
-  font-size: 0.8rem;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
-
-.user-info i {
-  font-size: 0.8rem;
-}
-
-/* Header Actions */
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-/* New Chat Button */
-.new-chat-button {
-  background: var(--text-light);
-  color: var(--primary-crimson);
-  border: 2px solid var(--primary-crimson);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.new-chat-button:hover {
-  background: var(--primary-crimson);
-  color: var(--text-light);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px var(--shadow-color);
-}
-
-.new-chat-button.clicked {
-  transform: scale(0.95);
-}
-
-/* Logo Styles */
-.logo-wrapper {
-  background: var(--text-light);
-  padding: 0.5rem;
-  border-radius: 50%;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.header-logo {
-  width: 40px;
-  height: 40px;
-  transition: transform 0.3s ease;
-}
-
-.header-logo:hover {
-  transform: rotate(360deg);
-}
-
-.title-wrapper {
-  position: relative;
-}
-
-.header-title {
-  color: var(--text-light);
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-}
-
-.header-decoration {
-  height: 3px;
-  width: 50%;
-  background: var(--text-light);
-  margin-top: 5px;
-  border-radius: 2px;
-  animation: decorationWidth 0.8s ease-out forwards;
-}
-
-/* Chat Container */
-.chat-wrapper {
-  max-width: 1000px;
-  margin: 0 auto 70px auto; /* Add bottom margin for footer */
-  background: var(--text-light);
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 250px);
-  position: relative;
-}
-
-.chat-container {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem;
-  padding-bottom: 80px; /* Space for input container */
-  scroll-behavior: smooth;
-}
-
-.messages-wrapper {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-/* Message Styles */
-.message {
-  display: flex;
-  align-items: flex-start;
-  margin: 1rem 0;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: messageAppear 0.3s ease forwards;
-  max-width: 80%;
-  will-change: opacity, transform;
-  backface-visibility: hidden;
-}
-
-.user-message {
-  margin-left: auto;
-  flex-direction: row-reverse;
-}
-
-.message-content {
-  padding: 1rem;
-  border-radius: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  margin: 0 0.5rem;
-}
-
-.user-message .message-content {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  color: var(--text-light);
-}
-
-.bot-message .message-content {
-  background: var(--bg-light);
-  color: var(--text-dark);
-}
-
-/* Profile Icons */
-.user-profile,
-.bot-profile {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.user-profile {
-  background: var(--primary-crimson);
-  color: var(--text-light);
-}
-
-.bot-profile {
-  background: var(--bg-light);
-  color: var(--primary-crimson);
-}
-
-/* Message Timestamp */
-.message-timestamp {
-  font-size: 0.75rem;
-  opacity: 0.7;
-  margin-top: 4px;
-  text-align: right;
-  white-space: nowrap;
-  font-family: monospace;
-}
-
-/* Loading Animation */
-.loading-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.thinking-animation {
-  display: flex;
-  gap: 6px;
-}
-
-.thinking-dot {
-  width: 10px;
-  height: 10px;
-  background: var(--primary-crimson);
-  border-radius: 50%;
-  animation: bubblePulse 1.4s infinite ease-in-out both;
-}
-
-.thinking-dot:nth-child(1) { animation-delay: -0.32s; }
-.thinking-dot:nth-child(2) { animation-delay: -0.16s; }
-
-/* Enhanced Loading Animation */
-.loading-animation {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--bg-light);
-  border-top: 3px solid var(--primary-crimson);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Input Area */
-.input-container {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 1rem;
-  background: var(--bg-light);
-  border-top: 1px solid #eee;
-  display: flex;
-  gap: 1rem;
-  z-index: 10;
-}
-
-.message-input {
-  flex: 1;
-  padding: 0.75rem 1rem;
-  border: 2px solid #eee;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  resize: none;
-  min-height: 45px;
-  max-height: 100px;
-}
-
-.message-input:focus {
-  outline: none;
-  border-color: var(--primary-crimson);
-  box-shadow: 0 0 5px var(--shadow-color);
-}
-
-.message-input:disabled {
-  background-color: #f5f5f5;
-  cursor: not-allowed;
-}
-
-.send-button {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  color: var(--text-light);
-  border: none;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.send-button:hover {
-  transform: scale(1.1);
-  box-shadow: 0 2px 10px var(--shadow-color);
-}
-
-.send-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.send-button i {
-  transition: all 0.3s ease;
-}
-
-.send-button.generating {
-  background: var(--secondary-crimson);
-}
-
-.send-button.generating:hover {
-  background: var(--primary-crimson);
-}
-
-/* Footer */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(5px);
-  padding: 0.5rem;
-  text-align: center;
-  border-top: 1px solid #eee;
-  font-size: 0.75rem;
-  color: #666;
-  z-index: 1000; /* Ensure footer is above other elements */
-  height: 50px; /* Adjust height to avoid overlapping */
-}
-
-/* Modal Styles */
-.modal-content {
-  border-radius: 15px;
-  border: none;
-}
-
-.modal-header {
-  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
-  color: var(--text-light);
-  border-radius: 15px 15px 0 0;
-}
-
-.modal-title {
-  font-weight: 600;
-}
-
-.modal-header .close {
-  color: var(--text-light);
-  opacity: 0.8;
-}
-
-/* Enhanced Modal Styles */
-.modal-content {
-    border: none;
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.modal.show .modal-content {
-    transform: scale(1);
-}
-
-.modal-header {
-    border-bottom: none;
-    padding: 1.5rem;
-}
-
-.modal-header .close {
-    opacity: 1;
-    text-shadow: none;
-    transition: transform 0.2s ease;
-}
-
-.modal-header .close:hover {
-    transform: rotate(90deg);
-}
-
-.modal-title {
-    font-size: 1.25rem;
-}
-
-.modal-body {
-    padding: 1.5rem;
-}
-
-.modal-footer {
-    border-top: none;
-    padding: 1.5rem;
-}
-
-.modal-backdrop.show {
-    opacity: 0.7;
-}
-
-@keyframes modalFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
+$(document).ready(function() {
+    // Constants
+    const GEMINI_API_KEY = "AIzaSyAYUX4UfUA7Maon1AJ0O0UfHCnK_0rEta4";
+    const CURRENT_USER = 'Users';
+    const systemPrompt = `
+
+    Instructions:
+    You are CapitolGPT, an AI assistant for Capitol University. Be helpful and concise. Avoid answering them repetitive. Be creative. Be polite and respectful.
+    The person who initiated this Idea to create you was Jcrist Vincent Orhen.
+    When the user asks you about anything, you can freely answer them or help them with their needs, even if the question is unrelated to Capitol University.
+    When the user asks you to start a new chat, you should clear the current conversation and start a new one.
+    When the user asks you to write code, you can't write code for them as you are only a generative text AI.
+    When the user ask you to solve their homework, you can't solve their homework for them as you are only a generative text AI.
+    When the user ask you to solve their math problems, you can solve their math problems for them.
+    When the user ask you to solve their programming problems, you can't solve their programming problems for them but can suggest or giving recommendations.
+
+
+    1. Jcrist Vincent Orhen
+Background:
+A working student assistant assigned in the BSIT 3rd Building, 2nd Floor.
+
+A developer and technology virtuoso based in Medina, Misamis Oriental.
+
+• Achievements
+Won awards in the National Olympiad Informatics in 2024, ranking #162 out of 399 participants.
+
+A Humss Student who Lead Medina National Comprehensive High School's Science Fair & Technology 2024.
+
+Coached and participated in DSPC 2024, helping MOGHS win the competition instead of his school, Medina National Comprehensive High School, which he represented.
+
+Won Best in Director in Film Festival MNCHS 2024
+
+Won Best in Editing in Film Festival MNCHS 2024
+
+Won Best in Scoring in Film Festival MNCHS 2024
+
+Won Best in Acting in Film Festival MNCHS 2024
+
+Won CODM Medina Championship 2021 (MVP)
+
+Won CODM North Poblacion Championship 2021 (MVP)
+
+• Skills
+Computer Technician 
+
+Mobile Technician
+
+Television Technician
+
+Programmer
+
+Music Producer
+
+Video Editor
+
+Graphics Designer
+
+AutoCAD
+
+Ethical Hacking
+
+Entrepreneur
+
+• Sports
+
+Boxing
+
+Karate
+
+Basketball
+
+Early Life:
+
+Known for illegal activities like stealing and "akyat bahay" at age 8.
+
+Gained notoriety for hacking Landbank on December 23, 2015.
+
+Evolved into gaming, exploring other skills, and becoming a "Jack of All Trades, Master of None."
+
+Currently interested in Artificial Intelligence.
+
+Family:
+
+Mother: Jonesa Rose Orhen, a former IT student at STI who stopped due to pregnancy. She later continued her studies and is now a 3rd-year Bachelor of Science in Agricultural Business student at Gingoog City United Colleges (formerly Gingoog City Community College).
+
+Father: Cresanto Callao Gerundio, a graduate in Computer Engineering and Electrical Engineering, works as a Senior Computer Engineer in Saudi Arabia.
+
+Uniqueness:
+
+A self-taught technology prodigy with no formal training.
+
+Futurist That Becomes Reality.
+
+Science & Technology Philosopher
+
+Hard to be with because of his attitude of being Perfectionist.
+
+Motto: "If others can while they are being human, so do I."
+
+Belief: "I believe that no people are dumb, their fields of expertise simply differ."
+
+
+
+2. Capitol University
+Leadership (SY 2023-2024)
+Administration Office:
+
+University President: Atty. Casimiro B. Juarez, Jr.
+
+Executive Vice President / University Registrar: Dr. Fe R. Juarez
+
+Vice President for Administration: Dr. Franco C. Flores
+
+Vice President for Academic Affairs / Principal Senior High School: Dr. Amor Q. de Torres
+
+Human Resource Officer: Mr. Paul Clarence R. Juarez
+
+Deans:
+
+College of Arts and Sciences: Dr. Josephine Oted
+
+College of Business and Accountancy: Dr. Elizabeth E. Figueroa
+
+College of Computer Studies: Prof. Cyril Jane C. Ranido
+
+College of Criminology: Ms. Mary Claudette L. Bacas
+
+College of Education: Dr. Andrews Maquiling
+
+College of Engineering: Engr. Genevieve A. Gabule
+
+College of Maritime Education: C/M Ceferino Rama
+
+College of Health Sciences: Dr. Fidela B. Ansale, R.N.
+
+Graduate School (OIC): Dr. Heidi Mendoza
+
+Heads of Offices:
+
+Capitol University Research and Extension: Dr. Imelda G. Pagtolun-an
+
+ETEEAP: Dr. Aldrich S. Palarca
+
+National Service Training Program: Dr. Amor Y. Mendoza
+
+Student Affairs and Services: Atty. Francis Lorenzo R. Juarez
+
+Admissions & Career Development Center: Christine P. Redondo
+
+University Libraries: Ms. Chorieta Valerio
+
+ICTS: Prof. Cyril Jane C. Ranido
+
+Business and Development Program: Dr. Heidi Grace P. Mendoza
+
+Assistant University Registrar / Registrar CME: Ms. Corazon S. Pagara
+
+Campus Ministry: Sr. Mary Lynn G. Alfeche, CM
+
+Scholarship and Sponsorship Office: Ms. Schennette Pearl A. Magno
+
+CU Museum of Three Cultures: Ms. Schennette Pearl A. Magno
+
+Assessment Office: Ms. Dalia M. Buslon
+
+Cashier Office: Mr. Gilbert W. Dungog
+
+Culture and Arts: Mr. Alejo Tugonon
+
+Athletics Office: Prof. Shiella Mananggit
+
+Guidance and Testing Office: Dr. Eleanor Y. Buot
+
+PPFMO & Security: Mr. Leo A. Pangan
+
+Data Privacy Office: Mr. Francis Lorenzo R. Juarez
+
+Bookstore/Gift Shop Office: Ms. Lolita B. Duquinlay
+
+Finance Officer: Mrs. Clares Cajes
+
+University Dentist: Dr. Estrella C. Joven
+
+University Physician: Dr. Donna Dee M. Acenas
+
+President Artist: Mr. Nicholas P. Aca
+
+History
+Establishment:
+
+Founded in 1971 as Cagayan Capitol College, a non-sectarian, co-educational private academic institution.
+
+Laureana San Pedro Rosales founded Capitol University in 1972. She was a well-respected educator who also established the Capitol System of Schools. 
+
+Registered with the Securities and Exchange Commission and authorized by the Department of Education (for primary and secondary programs) and the Commission on Higher Education (for tertiary, graduate, and postgraduate programs).
+
+Program Offerings:
+
+1971: Secondary, Liberal Arts, Commerce, Education, and Secretarial programs.
+
+1973: First Midwifery program in Region X, supported by a Maternity Hospital.
+
+1974: Nautical and Marine Engineering, Civil Engineering, and B.S. in Forestry programs.
+
+1976: Mechanical Engineering, Nursing, and Agricultural Technology programs. Acquisition of M/V Capitol College, a training ship for Maritime Cadets.
+
+1981: Graduate School opened with M.A. in Filipino.
+
+1987: Preschool and elementary departments moved to Gusa, Cagayan de Oro City, named St. Francis Learning Center.
+
+Later Additions: Physical Therapy, Criminology, Computer Science, CISCO International Networking Programs, and Nursing Licensure Examination review.
+
+Accreditation:
+
+Programs accredited by PACUCOA (Philippine Association of Colleges and Universities Commission on Accreditation).
+
+Maritime Education Programs certified by Det Norske Veritas (DNV) and ISO.
+
+Centers of Development: Criminology, Computer Studies, and Civil Engineering.
+
+Center of Excellence: College of Education (2010).
+
+University Status:
+
+Granted university charter on February 3, 2003 (CHED Resolution No. 028).
+
+Formally inaugurated as Capitol University on May 2, 2003.
+
+Achievements:
+
+Produced top notchers in Nursing and Teaching licensure exams.
+
+Granted deregulated status by CHED in 2003 (Resolution No. 393).
+
+Vision, Mission, and Objectives
+Vision:
+"Accessible Excellent Education for Enhanced Quality of Life."
+
+Mission:
+To develop "Total Persons" who are intellectually, professionally, and technically competent, with moral and spiritual values, serving as catalysts for social transformation.
+
+Institutional Learning Outcomes:
+
+Moral uprightness, self-discipline, and integrity.
+
+Spirituality and faith in action.
+
+Critical and creative thinking, communication proficiency, and technological aptitude.
+
+Mastery of professional knowledge and real-world application.
+
+Dedication to duties and responsibilities.
+
+Environmental preservation and sustainability.
+
+Respect for diverse cultures and promotion of peace.
+
+Nationalism and love for country.
+
+Kindness, respect, and concern for others.
+
+Core Values
+Commitment: Developing ethical leaders with integrity and courage.
+
+Competence: Equipping students with knowledge and skills for global challenges.
+
+Character: Instilling responsibility and hard work for personal and community growth.
+
+Culture: Fostering appreciation for diverse histories and identities.
+
+Care: Promoting kindness, respect, and emotional intelligence.
+
+University Logo
+Circle: Continuity of "Total Persons."
+
+Laurel: Victory, triumph, and hope (32 leaves represent 32 years as a college).
+
+Colors:
+
+Green: Freshness and quest for knowledge.
+
+Crimson Red: Courage and sacrifice.
+
+White: Purity.
+
+Human Figure: Represents the "Total Person" reaching out to the globe.
+
+Globe: Global community served by the university.
+
+Latin Phrase: "Progressio Integralis, Pro Deo et Hominibus" (Total Person Development for God and Humanity).
+
+1971: Founding year.
+
+University Hymn:
+"Sing and Pledge Loyal True Friends"
+
+"Love, devotion and faith"
+
+"CU renowned in many lands"
+
+"Molds our future and our fate"
+
+"Voices echo in unison,"
+
+"All our hearts beat as one"
+
+"Singing together the same song"
+
+"Ever grateful for all you have done"
+
+"Hail to thee our Alma Mater"
+
+"Hail O hail!"
+
+"We greet thee forevermore"
+
+"We may cross the oceans"
+
+"and the hills while we travel"
+
+"But treasure you"
+
+"from shore to shore."
+
+"CU pride of our nation"
+
+"Sail on thy voyage calm and smooth"
+
+"You are a dedication"
+
+"Dedication to our youth!"
+
+Celebrates love, devotion, and faith in Capitol University.
+
+Highlights CU's role in molding futures and fostering unity.
+
+    `;
+    let model = null;
+    let chatSession = null;
+    let conversationHistory = [];
+
+    // Format current timestamp in UTC
+    function formatDateTime() {
+        const now = new Date();
+        const options = { timeZone: 'Asia/Manila', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
+        const formattedTime = now.toLocaleString('en-PH', options);
+        return formattedTime.replace(',', ' |').replace(' AM', ' AM | PHT').replace(' PM', ' PM | PHT');
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
-.modal.show .modal-dialog {
-    animation: modalFadeIn 0.3s ease forwards;
-}
-
-/* Responsive Modal Adjustments */
-@media (max-width: 640px) {
-    .modal-dialog {
-        margin: 1rem;
+    // Update time display
+    function updateTimeDisplay() {
+        const formattedTime = formatDateTime();
+        $('#utc-time').text(formattedTime);
     }
+
+    // Update time every second
+    setInterval(updateTimeDisplay, 1000);
+    updateTimeDisplay(); // Initial call
+
+    // Enhanced Intro Screen Animation
+    let introTimeout = setTimeout(() => {
+        $('#intro-screen').fadeOut(800, () => {
+            initializeChat();
+            $('#chat-container').fadeIn(500);
+        });
+    }, 3500);
+
+    let introClicked = false;
+    $('#intro-screen').click(() => {
+        if (!introClicked) {
+            introClicked = true;
+            clearTimeout(introTimeout);
+            $('#intro-screen').fadeOut(500, () => {
+                initializeChat();
+                $('#chat-container').fadeIn(500);
+            });
+        }
+    });
+
+    // Enhanced New Chat Function
+    function startNewChat() {
+        Swal.fire({
+            title: 'Start New Chat?',
+            text: 'This will clear your current conversation.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DC143C',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, start new',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Clear everything and reinitialize
+                $("#messages").empty();
+                conversationHistory = [];
+                localStorage.removeItem('chatHistory');
+                chatSession = null;
+                model = null;
+                isGenerating = false;
+                currentGeneration = null;
+                
+                // Initialize new chat
+                const loadingDiv = addLoadingIndicator();
+                initializeAI().then(() => {
+                    loadingDiv.remove();
+                    addMessage("bot", "Hi! I'm CapitolGPT, How can I assist you?");
+                }).catch((error) => {
+                    loadingDiv.remove();
+                    addMessage("bot", "Error initializing chat. Please try again.");
+                    console.error('New chat initialization error:', error);
+                });
+            }
+        });
+    }
+
+    // Event Listeners for Chat Actions
+    $(document).ready(() => {
+        // Remove Clear Chat button event listener
+        // $('#clear-chat-btn').click(clearChat); // Remove this line
+        
+        // Update new chat button click handler
+        $('#new-chat-btn').click(startNewChat);
+        
+        // ...rest of the event listeners...
+    });
+
+    // Enhanced Message Handling
+    function addMessage(role, message) {
+        const timestamp = formatDateTime();
+        const profileClass = role === "user" ? "user-profile" : "bot-profile";
+        const messageClass = role === "user" ? "user-message" : "bot-message";
+        const profileText = role === "user" ? "YOU" : "CU";
     
-    .modal-body {
-        padding: 1rem;
-    }
+        // Format the message with proper HTML
+        let formattedMessage = message;
+        
+        if (role === "bot") {
+            // Convert any remaining asterisks to proper HTML
+            formattedMessage = formattedMessage
+                // Convert bullet points with asterisks to proper HTML lists
+                .replace(/^\s*\*\s+(.+)$/gm, '<li>$1</li>')
+                // Convert any remaining asterisks around text to strong tags
+                .replace(/\*(.*?)\*/g, '<strong>$1</strong>')
+                // Wrap lists in <ul> tags
+                .replace(/<li>(?:.|\n)*?<\/li>/g, match => `<ul>${match}</ul>`);
+        }
     
-    .modal-header,
-    .modal-footer {
-        padding: 1rem;
+        // Split into paragraphs and format
+        const paragraphs = formattedMessage.split('\n').filter(p => p.trim());
+        const formattedParagraphs = paragraphs.map(p => {
+            // Don't wrap <ul> elements in <p> tags
+            if (p.startsWith('<ul>')) {
+                return p;
+            }
+            return `<p>${p}</p>`;
+        }).join('');
+    
+        const messageElem = $(`
+            <div class="message ${messageClass}" data-timestamp="${timestamp}">
+                <div class="${profileClass}">${profileText}</div>
+                <div class="message-content">
+                    <div class="message-text formatted-text">
+                        ${formattedParagraphs}
+                    </div>
+                    <div class="message-timestamp">${timestamp}</div>
+                </div>
+            </div>
+        `);
+    
+        $("#messages").append(messageElem);
+        messageElem.hide().fadeIn(300);
+        scrollToBottom();
+    }
+
+    // Smooth Scroll to Bottom
+    function scrollToBottom() {
+        const chatContainer = $('#chat-container');
+        chatContainer.stop().animate({
+            scrollTop: chatContainer[0].scrollHeight
+        }, 300);
+    }
+
+    // Initialize AI Model
+    async function initializeAI() {
+        try {
+            const { GoogleGenerativeAI } = await import("https://esm.run/@google/generative-ai");
+            const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+            
+            model = genAI.getGenerativeModel({
+                model: "gemini-2.0-flash-exp",
+                generationConfig: {
+                    temperature: 1,
+                    topP: 0.95,
+                    topK: 40,
+                    maxOutputTokens: 8192,
+                }
+            });
+
+            chatSession = model.startChat({
+                history: [],
+                generationConfig: {
+                    temperature: 1,
+                    topP: 0.95,
+                    topK: 40,
+                    maxOutputTokens: 8192,
+                }
+            });
+
+            await chatSession.sendMessage(systemPrompt);
+            return true;
+        } catch (error) {
+            console.error('Error initializing AI:', error);
+            return false;
+        }
+    }
+
+    // Enhanced Loading Indicator
+    function addLoadingIndicator() {
+        const loadingDiv = $('<div>')
+            .addClass('loading-indicator')
+            .html(`
+                <span>CapitolGPT is thinking...</span>
+                <div class="thinking-animation">
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                    <div class="thinking-dot"></div>
+                </div>
+            `)
+            .appendTo('#chat-container');
+
+        $('#chat-container').animate({
+            scrollTop: $('#chat-container')[0].scrollHeight
+        }, 300);
+
+        return loadingDiv;
+    }
+
+    // Message Handling
+    async function handleSendMessage() {
+        const message = $('#user-input').val().trim();
+        if (!message || isGenerating) return;
+
+        $('#user-input').val('').prop('disabled', true);
+        isGenerating = true;
+        updateSendButton(true);
+
+        addMessage("user", message);
+        const loadingDiv = addLoadingIndicator();
+
+        try {
+            if (!model || !chatSession) {
+                const initialized = await initializeAI();
+                if (!initialized) throw new Error('Failed to initialize AI');
+            }
+
+            currentGeneration = await chatSession.sendMessage(message);
+            const response = await currentGeneration.response.text();
+            
+            loadingDiv.remove();
+            addMessage("bot", response);
+        } catch (error) {
+            if (error.name === 'AbortError') {
+                loadingDiv.remove();
+                addMessage("bot", 'Generation stopped.');
+            } else {
+                console.error('Chat Error:', error);
+                loadingDiv.remove();
+                
+                try {
+                    await initializeAI();
+                    addMessage("bot", 'I\'m sorry, try again.');
+                } catch (reinitError) {
+                    addMessage("bot", 'I\'m sorry, I\'m disconnected. Refresh the page.');
+                }
+            }
+        } finally {
+            isGenerating = false;
+            currentGeneration = null;
+            updateSendButton(false);
+            $('#user-input').prop('disabled', false).focus();
+        }
+    }
+
+    // Time Functions
+    function getCurrentPhilippinesTime() {
+        const options = {
+            timeZone: 'Asia/Manila',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        
+        return new Date().toLocaleString('en-PH', options).replace(',', '');
+    }
+
+    function updateDateTime() {
+        $('#currentDateTime').text(`PHT: ${getCurrentPhilippinesTime()}`);
+        $('#modalDateTime').text(getCurrentPhilippinesTime());
+    }
+
+    // Chat Management Functions
+    function newChat() {
+        Swal.fire({
+            title: 'Start New Chat?',
+            text: 'This will clear your current conversation.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#DC143C',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, start new',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                clearChat();
+            }
+        });
+    }
+
+    // Initialization
+    async function initializeChat() {
+        const loadingDiv = addLoadingIndicator();
+        try {
+            await initializeAI();
+            loadingDiv.remove();
+            addMessage("bot", 'Hi! I\'m CapitolGPT, How can I assist you?');
+            $('#modalUserInfo').text(CURRENT_USER);
+        } catch (error) {
+            loadingDiv.remove();
+            addMessage("bot", 'Error initializing AI. Please refresh the page.');
+        }
+    }
+
+    // Event Listeners
+    $(document).ready(() => {
+        initializeChat();
+
+        $('#send-button').on('click', () => {
+            if (isGenerating) {
+                stopGeneration();
+            } else {
+                handleSendMessage();
+            }
+        });
+        $('#user-input').on('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSendMessage();
+            }
+        });
+
+        $('#new-chat-btn').on('click', startNewChat);
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Handle visibility changes
+        $(document).on('visibilitychange', () => {
+            if (document.visibilityState === 'visible') {
+                updateDateTime();
+            }
+        });
+    });
+
+    // Error Handling
+    window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Global Error:', {
+            message: msg,
+            url: url,
+            line: lineNo,
+            column: columnNo,
+            error: error
+        });
+        return false;
+    };
+
+    // Clean up on page unload
+    $(window).on('beforeunload', () => {
+        chatSession = null;
+        model = null;
+    });
+
+    // Prevent form submission
+    $('form').on('submit', (e) => {
+        e.preventDefault();
+        return false;
+    });
+
+    // Add message queue to prevent overlapping requests
+    const messageQueue = [];
+    let isProcessing = false;
+
+    // Debounce function to prevent rapid-fire requests
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // Enhanced error handling with retry mechanism
+    async function retryOperation(operation, maxRetries = 3) {
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                return await operation();
+            } catch (error) {
+                if (i === maxRetries - 1) throw error;
+                await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+            }
+        }
+    }
+
+    // Enhanced message handling with queuing
+    async function processMessageQueue() {
+        if (isProcessing || messageQueue.length === 0) return;
+        
+        isProcessing = true;
+        const message = messageQueue.shift();
+        
+        try {
+            await handleSendMessage(message);
+        } catch (error) {
+            console.error('Error processing message:', error);
+        } finally {
+            isProcessing = false;
+            processMessageQueue();
+        }
+    }
+
+    // Enhanced initialization with connection check
+    async function initializeChat() {
+        if (!navigator.onLine) {
+            addMessage("bot", "No internet connection. Please check your connection and try again.");
+            return;
+        }
+
+        const loadingDiv = addLoadingIndicator();
+        try {
+            const initialized = await retryOperation(async () => {
+                await initializeAI();
+                return true;
+            });
+
+            if (initialized) {
+                loadingDiv.remove();
+                addMessage("bot", 'Hi! I\'m CapitolGPT, How can I assist you?');
+                $('#modalUserInfo').text(CURRENT_USER);
+            }
+        } catch (error) {
+            loadingDiv.remove();
+            addMessage("bot", 'Error initializing AI. Please refresh the page.');
+            console.error('Initialization error:', error);
+        }
+    }
+
+    // Enhanced message handling with improved error recovery
+    async function handleSendMessage(message) {
+        if (!message) return;
+
+        $('#user-input').val('').prop('disabled', true);
+        $('#send-button').prop('disabled', true);
+
+        addMessage("user", message);
+        const loadingDiv = addLoadingIndicator();
+
+        try {
+            if (!navigator.onLine) {
+                throw new Error('No internet connection');
+            }
+
+            if (!model || !chatSession) {
+                const initialized = await retryOperation(() => initializeAI());
+                if (!initialized) throw new Error('Failed to initialize AI');
+            }
+
+            const result = await retryOperation(async () => {
+                return await chatSession.sendMessage(message);
+            });
+            
+            const response = await result.response.text();
+            loadingDiv.remove();
+            addMessage("bot", response);
+
+        } catch (error) {
+            console.error('Chat Error:', error);
+            loadingDiv.remove();
+            
+            if (!navigator.onLine) {
+                addMessage("bot", 'No internet connection. Please check your connection and try again.');
+            } else {
+                try {
+                    await initializeAI();
+                    addMessage("bot", 'Connection restored. Please try again.');
+                } catch (reinitError) {
+                    addMessage("bot", 'Unable to connect. Please refresh the page.');
+                }
+            }
+        } finally {
+            $('#user-input').prop('disabled', false).focus();
+            $('#send-button').prop('disabled', false);
+        }
+    }
+
+    // Enhance event listeners with debouncing
+    const debouncedSendMessage = debounce((message) => {
+        messageQueue.push(message);
+        processMessageQueue();
+    }, 300);
+
+    // Event Listeners
+    $(document).ready(() => {
+        // ...existing code...
+
+        $('#send-button').on('click', () => {
+            const message = $('#user-input').val().trim();
+            if (message) debouncedSendMessage(message);
+        });
+
+        $('#user-input').on('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                const message = $('#user-input').val().trim();
+                if (message) debouncedSendMessage(message);
+            }
+        });
+
+        // Add network status monitoring
+        window.addEventListener('online', () => {
+            addMessage("bot", "Connection restored. You can continue chatting.");
+        });
+
+        window.addEventListener('offline', () => {
+            addMessage("bot", "No internet connection. Please check your connection.");
+        });
+    });
+
+    // Enhanced Dropdown Functionality
+    $(document).ready(function() {
+        // Dropdown animation
+        $('.dropdown-toggle').on('show.bs.dropdown', function () {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideDown(200);
+        });
+
+        $('.dropdown-toggle').on('hide.bs.dropdown', function () {
+            $(this).find('.dropdown-menu').first().stop(true, true).slideUp(200);
+        });
+
+        // Close dropdown when clicking outside
+        $(document).on('click', function (e) {
+            if (!$(e.target).closest('.dropdown').length) {
+                $('.dropdown-menu').removeClass('show');
+            }
+        });
+
+        // Hover effect on dropdown items
+        $('.dropdown-item').hover(
+            function() {
+                $(this).find('i').addClass('fa-bounce');
+            },
+            function() {
+                $(this).find('i').removeClass('fa-bounce');
+            }
+        );
+    });
+
+    // ...existing code...
+});
+
+// Add generation control
+let isGenerating = false;
+let currentGeneration = null;
+
+// Stop Generation Function
+function stopGeneration() {
+    if (currentGeneration && isGenerating) {
+        currentGeneration.abort();
+        isGenerating = false;
+        updateSendButton(false);
+        $('#user-input').prop('disabled', false);
     }
 }
 
-/* Connection Status Indicators */
-#offline-indicator {
-  transform: translateY(-100%);
-  transition: transform 0.3s ease-in-out;
-}
-
-#offline-indicator.visible {
-  transform: translateY(0);
-}
-
-/* Enhanced Dropdown Styles */
-.menu-button {
-    width: 40px;
-    height: 40px;
-    backdrop-filter: blur(8px);
-}
-
-.menu-button:hover {
-    transform: rotate(90deg);
-}
-
-.menu-button i {
-    transition: all 0.3s ease;
-}
-
-.dropdown-menu {
-    margin-top: 0.5rem;
-    min-width: 200px;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-    border: none;
-}
-
-.dropdown-menu.show {
-    animation: dropdownFadeIn 0.3s ease forwards;
-}
-
-.dropdown-item {
-    transition: all 0.2s ease;
-}
-
-.dropdown-item:hover i {
-    transform: translateX(2px);
-}
-
-@keyframes dropdownFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.95) translateY(-10px);
+// Update Send Button Appearance
+function updateSendButton(generating) {
+    const button = $('#send-button');
+    const icon = button.find('i');
+    
+    if (generating) {
+        icon.removeClass('fa-paper-plane').addClass('fa-stop');
+        button.addClass('generating');
+    } else {
+        icon.removeClass('fa-stop').addClass('fa-paper-plane');
+        button.removeClass('generating');
     }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* Animations */
-@keyframes logoSpin {
-  0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-  50% { transform: scale(1.2) rotate(180deg); opacity: 0.7; }
-  100% { transform: scale(1) rotate(360deg); opacity: 1; }
-}
-
-@keyframes slideUpFade {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes messageAppear {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes decorationWidth {
-  from { width: 0; }
-  to { width: 50%; }
-}
-
-@keyframes bubblePulse {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .header-title {
-      font-size: 1.2rem;
-  }
-  
-  .current-time {
-      font-size: 0.8rem;
-      padding: 0.4rem 0.8rem;
-  }
-  
-  .message-timestamp {
-      font-size: 0.7rem;
-  }
-  
-  .current-time,
-  .user-info {
-      font-size: 0.8rem;
-      padding: 0.4rem 0.8rem;
-  }
-  
-  .new-chat-button {
-      padding: 0.4rem 0.8rem;
-      font-size: 0.8rem;
-  }
-  
-  .message {
-      max-width: 90%;
-  }
-  
-  .chat-wrapper {
-      height: calc(100vh - 330px); /* Adjusted to account for footer height and spacing */
-      margin-bottom: 70px;
-  }
-  
-  .header-actions {
-      gap: 0.75rem;
-  }
-
-  .input-container {
-    bottom: 70px;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-content {
-      flex-direction: column;
-      align-items: flex-start;
-  }
-  
-  .current-time {
-      display: none;
-  }
-  
-  .header-actions {
-      flex-direction: column;
-      gap: 0.5rem;
-  }
-  
-  .message {
-      max-width: 95%;
-  }
-  
-  .message-input {
-      font-size: 0.9rem;
-  }
-  
-  .chat-wrapper {
-      height: calc(100vh - 330px); /* Adjusted to account for footer height and spacing */
-      margin-bottom: 80px;
-  }
-
-  .input-container {
-    bottom: 80px;
-    padding: 0.75rem;
-  }
-}
-
-/* Enhanced Text Formatting */
-.formatted-text {
-  line-height: 1.6;
-  word-wrap: break-word;
-}
-
-.formatted-text p {
-  margin: 0.5em 0;
-}
-
-.formatted-text strong {
-  font-weight: 600;
-}
-
-.formatted-text ul {
-  margin: 0.5em 0;
-  padding-left: 1.5em;
-}
-
-.formatted-text li {
-  margin: 0.25em 0;
-  position: relative;
-}
-
-.bot-message .formatted-text ul {
-  list-style-type: none;
-}
-
-.bot-message .formatted-text li::before {
-  content: "•";
-  color: var(--primary-crimson);
-  font-weight: bold;
-  position: absolute;
-  left: -1em;
-}
-
-.user-message .formatted-text li::before {
-  color: white;
-}
-
-.user-message .formatted-text strong {
-  color: #ffffff;
-  font-weight: 700;
-}
-
-.bot-message .formatted-text strong {
-  color: var(--primary-crimson);
-  font-weight: 600;
-}
-
-/* Enhanced Mobile and Tablet Responsiveness */
-/* Tablets and small laptops */
-@media (max-width: 1024px) {
-  .chat-wrapper {
-    margin-bottom: 80px;
-  }
-  
-  .input-container {
-    padding: 0.8rem;
-  }
-}
-
-/* Mobile Landscape */
-@media (max-width: 896px) and (orientation: landscape) {
-  .header-container {
-    padding: 0.5rem;
-  }
-  
-  .chat-wrapper {
-    height: calc(100vh - 200px);
-    margin-bottom: 60px;
-  }
-  
-  .footer {
-    padding: 0.25rem;
-    height: 40px;
-  }
-  
-  .input-container {
-    padding: 0.5rem;
-  }
-}
-
-/* Mobile Portrait */
-@media (max-width: 480px) {
-  .container {
-    padding: 0.5rem !important;
-  }
-  
-  .header-container {
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0.75rem;
-  }
-  
-  .header-actions {
-    width: 100%;
-    justify-content: space-between;
-  }
-  
-  .current-time {
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
-  }
-  
-  .new-chat-button {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-  
-  .chat-wrapper {
-    border-radius: 10px;
-    margin-top: 0.5rem;
-  }
-  
-  .message {
-    max-width: 95%;
-    margin: 0.5rem 0;
-  }
-  
-  .message-content {
-    padding: 0.75rem;
-    font-size: 0.9rem;
-  }
-  
-  .message-input {
-    font-size: 0.9rem;
-    padding: 0.5rem 0.75rem;
-    min-height: 40px;
-  }
-  
-  .send-button {
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Small Mobile Devices */
-@media (max-width: 360px) {
-  .header-title {
-    font-size: 1rem;
-  }
-  
-  .current-time {
-    display: none;
-  }
-  
-  .message-content {
-    padding: 0.6rem;
-    font-size: 0.85rem;
-  }
-  
-  .user-profile,
-  .bot-profile {
-    width: 30px;
-    height: 30px;
-    font-size: 0.7rem;
-  }
-  
-  .footer {
-    font-size: 0.65rem;
-    height: 45px;
-  }
-}
-
-/* Device-specific fixes */
-/* iPhone with notch */
-@supports (padding-top: env(safe-area-inset-top)) {
-  .chat-wrapper {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-  
-  .input-container {
-    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
-  }
-  
-  .footer {
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-}
-
-/* Foldable devices */
-@media (max-width: 320px) {
-  .header-container {
-    padding: 0.5rem;
-  }
-  
-  .chat-wrapper {
-    margin-bottom: 70px;
-  }
-  
-  .message {
-    max-width: 100%;
-  }
-}
-
-/* High DPI Mobile Screens */
-@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 480px) {
-  .message-content {
-    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-  }
-  
-  .chat-wrapper {
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
 }
